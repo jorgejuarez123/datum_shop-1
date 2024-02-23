@@ -12,7 +12,6 @@ COPY . /app
 RUN npm install --legacy-peer-deps
 
 # Generate the build of the application
-RUN NODE_OPTIONS=--max-old-space-size=8192
 RUN npm run build
 
 WORKDIR /app/dist

@@ -87,13 +87,13 @@ export class ProductBoxComponent implements OnInit {
 
   openProductDetail(content: any, id: number) {
     this.modalService.open(content, { centered: true, size: 'lg' });
-    this.ProductService.getProduct(id).subscribe((product) => {
+    this.ProductService.getProduct(id).subscribe((product: any) => {
       this.productDetail = product;
     });
   }
 
   ngOnInit() {
-    this.obtenerProductos();
+    this.simularDatos();
     // this.ProductService.drGetProducts().subscribe((data: DrProduct[]) => {
     //   console.log(data)
     //   this.listData = data;
@@ -101,29 +101,42 @@ export class ProductBoxComponent implements OnInit {
     // this.cargaMasiva();
   }
 
+  simularDatos(): void {
+    this.obtenerProductos();
+    this.obtenerProductosEstaticos();
+  }
+
   obtenerProductos(): void {
-    this.cargando = true;
     this.cantidad += 1;
     if (this.cantidad > 30) this.cantidad = 10;
-    this.ProductService.drGetProductosPorCantidad(this.cantidad).subscribe((res) => {
-      res.productoRespuesta?.forEach((prd: any) => {
-        this.listData.push({
-          idProductos: this.listData.length + 1,
-          nombreProducto: prd.nombreProducto,
-          precio: this.aleatorio(2000),
-          descripcion: this.loremIpsu(this.aleatorio(15)),
-          imagen: `${this.dirBase}/${this.imagenes[Math.floor(Math.random() * this.imagenes.length)]}`,
-          marca: this.marca(this.aleatorio(8)),
-          moneda: 'L. ',
-          qty: 1,
-          ranking: 5
-        });
-      });
-      this.cargando = false;
+    this.ProductService.drGetProductosPorCantidad(this.cantidad).subscribe((_: any) => {
+
     },
       (_) => {
-        this.cargando = false;
+
       });
+  }
+
+  obtenerProductosEstaticos(): void {
+    this.cargando = true;
+    for (let i = 0; i < 4; i++) {
+      const aleatorio = Math.floor(Math.random() * this.imagenes.length);
+      this.listData.push({
+        idProductos: this.listData.length + 1,
+        nombreProducto: this.imagenes[aleatorio].split('.')[0],
+        precio: this.aleatorio(2000),
+        descripcion: this.loremIpsu(this.aleatorio(15)),
+        imagen: `${this.dirBase}/${this.imagenes[aleatorio].split('.')[0]}.png`,
+        marca: this.marca(this.aleatorio(8)),
+        moneda: 'L. ',
+        qty: 1,
+        ranking: 5
+      });
+    }
+
+    setTimeout(() => {
+      this.cargando = false;
+    }, 1500);
   }
 
   loremIpsu(wordCount: number) {
@@ -161,7 +174,7 @@ export class ProductBoxComponent implements OnInit {
   }
 
   cargaMasiva(): void {
-    this.ProductService.drMassiveGetProducts(100000).subscribe((_) => {
+    this.ProductService.drMassiveGetProducts(100000).subscribe((_: any) => {
       console.log('completada', _)
     });
   }

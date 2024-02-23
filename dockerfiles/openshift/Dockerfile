@@ -1,4 +1,4 @@
-FROM ubi8/nodejs-18 AS build
+FROM node:lts AS build
 
 USER root
 

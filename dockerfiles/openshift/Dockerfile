@@ -1,4 +1,4 @@
-FROM node:lts AS build
+FROM node:18 AS build
 
 USER root
 
@@ -9,7 +9,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm install -g npm@9.9.0
+RUN npm install -g npm@8.0.0
 
 RUN npm install --legacy-peer-deps
 

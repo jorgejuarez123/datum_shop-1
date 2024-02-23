@@ -1,4 +1,4 @@
-FROM ubi8/nodejs-18:1-22 AS build
+FROM ubi8/nodejs-18 AS build
 
 USER root
 
@@ -9,9 +9,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm install -g npm@10.4.0
-
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 # Generate the build of the application
 RUN npm run build
@@ -19,10 +17,10 @@ RUN npm run build
 WORKDIR /app/dist
 
 # Stage 2: Serve app with nginx server
-FROM ubi8/nginx-122:1-47
+FROM ubi8/nginx-122
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=build /app/dist/template /usr/share/nginx/html
+COPY --from=build /app/dist/datum_shop /usr/share/nginx/html
 
 CMD nginx -g "daemon off;"

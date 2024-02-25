@@ -1,4 +1,4 @@
-FROM node AS build
+FROM node:18 AS build
 
 USER root
 
@@ -9,8 +9,12 @@ WORKDIR /app
 
 COPY . /app
 
-# Install all Angular dependacies
-RUN npm ci
+RUN npm install -g npm@8.0.0
+
+RUN npm install --legacy-peer-deps
+
+# Generate the build of the application
+RUN npm run build
 
 WORKDIR /app/dist
 

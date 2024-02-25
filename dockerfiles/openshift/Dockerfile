@@ -1,4 +1,4 @@
-FROM node:18 AS build
+FROM node AS build
 
 USER root
 
@@ -15,10 +15,10 @@ RUN npm ci
 WORKDIR /app/dist
 
 # Stage 2: Serve app with nginx server
-FROM ubi8/nginx-122
+FROM nginx
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=build /app/dist/angulardummy /usr/share/nginx/html
+COPY --from=build /app/dist/datum_shop /usr/share/nginx/html
 
 CMD nginx -g "daemon off;"

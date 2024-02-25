@@ -9,12 +9,8 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm install -g npm@9.6.7
-
-RUN npm install --legacy-peer-deps
-
-# Generate the build of the application
-RUN npm run build
+# Install all Angular dependacies
+RUN npm ci
 
 WORKDIR /app/dist
 

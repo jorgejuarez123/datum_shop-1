@@ -9,7 +9,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm install -g npm@8.0.0
+RUN npm install -g npm@9.6.7
 
 RUN npm install --legacy-peer-deps
 

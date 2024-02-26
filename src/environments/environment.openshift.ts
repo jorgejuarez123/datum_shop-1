@@ -1,4 +1,4 @@
 export const environment = {
-    apiProductos: 'https://datum-shop-bryan-nunez-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com',
+    apiProductos: 'https://datum-shop-datum-shop.apps.ocp.datum.com',
     production: false
 }

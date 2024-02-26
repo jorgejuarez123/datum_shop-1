@@ -1,4 +1,4 @@
-FROM node AS build
+FROM ubi8/nodejs-20:1-22 AS build
 
 USER root
 
@@ -19,7 +19,7 @@ RUN npm run build
 WORKDIR /app/dist
 
 # Stage 2: Serve app with nginx server
-FROM nginx
+FROM ubi8/nginx-122:1-47
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
